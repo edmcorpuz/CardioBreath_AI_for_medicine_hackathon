@@ -1,0 +1,9 @@
+# Static frontend on Netlify; /api/* is proxied to the backend named by the API_ORIGIN env var
+# (set it in Netlify's site settings, never here). See scripts/write-redirects.mjs.
+[build]
+  command = "npm run build && node scripts/write-redirects.mjs"
+  publish = "out"
+
+[build.environment]
+  # The proxy rule must contain the origin, so let Netlify's secret scan skip that one file.
+  SECRETS_SCAN_OMIT_PATHS = "out/_redirects"
